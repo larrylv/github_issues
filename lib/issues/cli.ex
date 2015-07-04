@@ -7,7 +7,9 @@ defmodule Issues.CLI do
   that end up generating a table of the last _n_ issues in a github project
   """
 
-  def run(argv) do
+  import Issues.TableFormatter, only: [print_table_for_columns: 2]
+
+  def main(argv) do
     argv |> parse_args |> process
   end
 
@@ -47,7 +49,8 @@ defmodule Issues.CLI do
       |> decode_response
       |> convert_to_list_of_hashdicts
       |> sort_into_ascending_order
-      |> Enum.tak(count)
+      |> Enum.take(count)
+      |> print_table_for_columns(["number", "created_at", "title"])
   end
 
   def decode_response({:ok, body}), do: body

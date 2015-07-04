@@ -13,10 +13,10 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response({:ok, response}) do
-    {:ok, :jsx.decode(response)}
+    {:ok, :jsx.decode(response.body)}
   end
 
   def handle_response({:error, response}) do
-    {:error, :jsx.decode(response)}
+    {:error, :jsx.decode(response.body)}
   end
 end
